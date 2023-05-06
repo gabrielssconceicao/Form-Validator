@@ -22,9 +22,75 @@ img {
   height: 100vh;
   object-fit: contain;
 }
-
 form {
-  width: 30%;
-  height: 100vh;
-  background-color: #aaa;
+  width: 35%;
+  background-color: #690BDE;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
+form .form-body {
+  background: #ffffffd1;
+  color: #350DFA;
+  border-radius: 2rem;
+  padding: 20px;
+  max-width: 60%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+form h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+form button {
+  width: 70%;
+
+  padding: 1rem;
+  border-radius: 2rem;
+
+  background-color: #350DFA;
+  color: #fff;
+  border: 2px solid transparent;
+  transition: border 300ms;
+}
+
+form button:hover {
+  cursor: pointer;
+  border: 2px solid #1c0788;
+}
+
+.label-input{
+  height: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 1.5rem;
+}
+
+.label-input span {
+  font-size: 1.5rem;
+}
+
+.label-input input {
+  height: 2.5rem;
+
+  background-color: transparent;
+
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #350DFA;
+  padding:0.5rem; 
+  
+}
+
+.label-input input::placeholder {
+  color: #777;
+}
+
