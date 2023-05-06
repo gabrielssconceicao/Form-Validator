@@ -23,7 +23,7 @@ img {
   object-fit: contain;
 }
 form {
-  width: 35%;
+  width: 45%;
   background-color: #690BDE;
   display: inline-flex;
   justify-content: center;
@@ -34,7 +34,7 @@ form .form-body {
   color: #350DFA;
   border-radius: 2rem;
   padding: 20px;
-  max-width: 60%;
+  max-width: 70%;
   height: 500px;
   display: flex;
   flex-direction: column;
@@ -94,3 +94,25 @@ form button:hover {
   color: #777;
 }
 
+@media (max-width: 768px) {
+
+  
+  main {
+    display: block;
+  }
+  div {
+    display: none;
+  }
+
+  form {
+    width: 100vw;
+    height: 100vh;   
+  } 
+}
+
+@media(max-width: 425px) {
+  .label-input span {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+}
