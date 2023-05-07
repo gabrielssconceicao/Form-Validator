@@ -35,7 +35,9 @@ form .form-body {
   border-radius: 2rem;
   padding: 20px;
   max-width: 70%;
-  height: 500px;
+  height: fit-content;
+  
+  
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -96,6 +98,7 @@ form button:hover {
 
 .error-msg {
   color: #f00;
+  font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
@@ -118,5 +121,9 @@ form button:hover {
   .label-input span {
     display: inline-block;
     margin-bottom: 5px;
+  }
+
+  .error-msg {
+    font-size: 1rem;
   }
 }

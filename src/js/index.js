@@ -7,47 +7,94 @@ class FormValidador {
     let errors = false;
     const formInputs = this.form.querySelectorAll('input');
 
-    const errorIsEmpty = this.isEmpty(formInputs);
+    this.clear(formInputs);
+    const IsEmptyError = this.isEmpty(formInputs);
+    const lengthError = this.validateValues(formInputs);
 
-    if (!errorIsEmpty) {
-      errors = false;
-
-      return;
+    if (IsEmptyError || lengthError) {
+      errors = true;
     }
-    errors = true;
-    console.log(errors);
-    return;
+
+    return errors;
   }
 
   isEmpty(array) {
     let errors = false;
-    this.clear(array);
+
     for (let item of array) {
       if (!item.value) {
         errors = true;
-        const error = this.errorMsg(item.dataset.key);
-        item.parentNode.appendChild(error);
+        this.addError(item, 'não deve ficar vazio');
       }
     }
 
     return errors;
   }
 
-  errorMsg(id) {
+  validateValues(array) {
+    let errors = false;
+    const passwordArray = [];
+    for (let item of array) {
+      if (
+        item.type !== 'password' &&
+        (item.value.length < 3 || item.value.length > 255)
+      ) {
+        errors = true;
+        this.addError(item, 'deve ter entre 3 e 255 caracteres');
+      }
+
+      if (item.type === 'email') {
+        const regex = new RegExp(
+          /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
+          'gm'
+        );
+
+        if (!regex.test(item.value)) {
+          errors = true;
+          this.addError(item, 'inválido');
+        }
+      }
+
+      if (item.type === 'password') {
+        if (item.value.length < 3 || item.value.length > 50) {
+          errors = true;
+          this.addError(item, 'deve ter entre 3 e 50 caracteres');
+        }
+        passwordArray.push(item);
+      }
+    }
+
+    if (passwordArray[0].value !== passwordArray[1].value) {
+      for (let item of passwordArray) {
+        errors = true;
+        this.addError(item, ' As senhas são diferentes', true);
+      }
+    }
+
+    return errors;
+  }
+
+  errorMsg(id = '', msg) {
     const p = document.createElement('p');
-    p.innerHTML = `Campo ${id.toUpperCase()} não deve ficar vazio`;
+    p.innerHTML = `${id.toUpperCase()} ${msg}`;
     p.classList.add('error-msg');
     return p;
   }
 
+  addError(item, errorMsg, show = false) {
+    let dataKey = item.dataset.key;
+    if (show) {
+      dataKey = '';
+    }
+    const error = this.errorMsg(dataKey, errorMsg);
+    item.parentNode.appendChild(error);
+  }
+
   clear(array) {
     for (let item of array) {
-      const p = item.parentNode.querySelector('.error-msg');
-      if (p) {
-        item.parentNode.removeChild(p);
+      while (item.nextSibling) {
+        item.parentNode.removeChild(item.nextSibling);
       }
-
-      //
     }
   }
 }
@@ -58,5 +105,10 @@ const formValidator = new FormValidador(form);
 document.querySelector('button').addEventListener('click', (e) => {
   e.preventDefault();
 
-  formValidator.validate();
+  const error = formValidator.validate();
+
+  if (!error) {
+    form.submit();
+    window.alert('Formulário enviado');
+  }
 });
